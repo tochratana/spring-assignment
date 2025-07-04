@@ -17,16 +17,16 @@ public class CourseController {
 
     /* 1️⃣  /api/v1/courses?status=true
           Matches ONLY when _title_ is absent */
-    @GetMapping
+    @GetMapping(params = "status")
     public List<CoursesResponse> byStatus(
             @RequestParam(required = false) Boolean status) {
 
-        return coursesService.getCourses(status);
+        return coursesService.getCoursesStatus(status);
     }
 
     /* 2️⃣  /api/v1/courses?status=true&title=spring
            Matches ONLY when BOTH params are present */
-    @GetMapping(params = { "status", "title" })
+    @GetMapping
     public List<CoursesResponse> byStatusAndTitle(
             @RequestParam Boolean status,
             @RequestParam String  title) {
@@ -34,7 +34,7 @@ public class CourseController {
         return coursesService.getCourses(status, title);
     }
 
-    @GetMapping("/{code}")
+    @GetMapping("/search/{code}")
     public CoursesResponse getCoursesByCode(@PathVariable String code){
         return coursesService.getCoursesByCode(code);
     }

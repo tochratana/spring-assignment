@@ -16,7 +16,7 @@ public class CoursesServiceImpl implements CoursesService {
     private final CoursesRepository coursesRepository;
 
     @Override
-    public List<CoursesResponse> getCourses(Boolean status) {
+    public List<CoursesResponse> getCoursesStatus(Boolean status) {
         return coursesRepository.getCourses().stream()
                 .filter(c -> status == null || c.getStatus().equals(status))
                 .map(this::toDto)
@@ -45,12 +45,11 @@ public class CoursesServiceImpl implements CoursesService {
 
     @Override
     public CoursesResponse getCoursesById(String id) {
-        coursesRepository.getCourses().stream()
+        return coursesRepository.getCourses().stream()
                 .filter(courses -> Objects.equals(courses.getId(), id))
                 .map(this::toDto)
                 .findFirst()
                 .orElseThrow(()->new RuntimeException("Error"));
-        return null;
     }
 
     /* TODO mapper*/
